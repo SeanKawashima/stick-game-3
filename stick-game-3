@@ -1,0 +1,38 @@
+def nim_game():
+    # Computer will "cheat" and set the starting number of sticks
+    # Make sure it's NOT a multiple of 4, e.g., start with 13
+    sticks = 13
+    print(f"The game begins with {sticks} sticks in the pile.")
+    player_turn = False  # Computer goes first
+
+    while sticks > 0:
+        maxchoice = min(3, sticks)
+        if not player_turn:
+            # COMPUTER'S WINNING STRATEGY
+            if sticks % 4 == 0:
+                choice = 1
+            else:
+                choice = sticks % 4
+            sticks -= choice
+            print(f"Computer took {choice} stick(s). {sticks} sticks remain.")
+            if sticks == 0:
+                print("Computer took the last stick. You lose! Computer wins!")
+                return
+        else:
+            while True:
+                try:
+                    choice = int(input(f"Your turn. Take 1-{maxchoice} sticks: "))
+                    if 1 <= choice <= maxchoice:
+                        break
+                    else:
+                        print(f"Please choose a number between 1 and {maxchoice}.")
+                except ValueError:
+                    print("You must enter an integer.")
+            sticks -= choice
+            print(f"You took {choice} stick(s). {sticks} sticks remain.")
+            if sticks == 0:
+                print("You took the last stick. You lose! Computer wins!")
+                return
+        player_turn = not player_turn
+
+nim_game()
